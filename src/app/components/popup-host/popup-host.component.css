@@ -1,0 +1,23 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.popup__bg {
+    background-color: rgba(250, 250, 250, 0.5);
+}
+
+.popup__box {
+    padding: 40px;
+    background-color: rgb(177, 166, 166);
+    border-radius: 10px;
+}
+.hidden {
+    display: none;
+}
