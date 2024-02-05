@@ -1,4 +1,6 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, TemplateRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
+import {tap} from 'rxjs';
+import {PopupService} from 'src/app/shared/popup/popup.service';
 
 @Component({
     selector: 'app-popup-host',
@@ -7,14 +9,18 @@ import {ChangeDetectionStrategy, Component, HostBinding, Input, TemplateRef} fro
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopupHostComponent {
-    @Input() template: TemplateRef<unknown> | null = null;
+    template$ = this.popupService.popupTemplateState$.pipe(
+        tap(t => {
+            this.isEmpty = !t;
+        }),
+    );
 
     @HostBinding('class.empty')
-    get isTemplateNullable(): boolean {
-        return !this.template;
-    }
+    isEmpty = true;
 
-    // @Input()
-    // @HostBinding('class.view')
-    // template: TemplateRef<unknown> | null = null;
+    constructor(private readonly popupService: PopupService) {}
+
+    onPopupClose(): void {
+        this.popupService.closePopup();
+    }
 }
